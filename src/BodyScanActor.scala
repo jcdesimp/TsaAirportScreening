@@ -1,15 +1,18 @@
 import akka.actor.Actor.Receive
-import akka.actor.{Actor, UntypedActor}
+import akka.actor.{ActorRef, Actor, UntypedActor}
 
 /**
  * Created by jcdesimp on 12/3/14.
  * Actor representing BodyScanner
  */
-class BodyScanActor extends Actor {
-  override def receive: Receive = {
-    case "test" =>
+class BodyScanActor(idnum: Int, sec: ActorRef) extends Actor {
 
-    case _ => println("Unknown message recieved!")
+  val id = idnum
+  val security = sec
+
+  override def receive: Receive = {
+
+    case _ => unhandled(receive)
 
   }
 }

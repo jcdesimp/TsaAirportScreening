@@ -1,5 +1,8 @@
 import akka.actor.{ActorSystem, Props}
 
+import scala.collection.mutable
+import scala.collection.mutable.ArrayBuffer
+
 /**
  * Created by jcdesimp on 11/24/14.
  * Main file with main method for running program
@@ -10,12 +13,26 @@ object TSA {
     val NUM_LINES = 3 // N Number of lines in the airport
 
     val system = ActorSystem("TSAsystem")
-    //val docChecker = system.actorOf(Props(classOf[DocCheckActor], "hi"))
+
+    val tsaJail = system.actorOf(Props(classOf[JailActor], NUM_LINES))
+
+    val tsaLines = mutable.ArrayBuffer.empty[TSALine]
+    //val docChecker = system.actorOf(Props(classOf[DocCheckActor]))
     //docChecker ! new WaitingMessage
 
+
+
     for (x <- 0 until NUM_LINES) {
-      println(x);
+      val sec = system.actorOf(Props(classOf[SecurityActor], x, tsaJail))
+      val bag = system.actorOf(Props(classOf[BagScanActor], x, sec))
+      val body = system.actorOf(Props(classOf[BodyScanActor], x, sec))
+      val que = system.actorOf(Props(classOf[QueueActor], x, bag, body))
+      tsaLines += new TSALine(sec, bag, body, que)
+
     }
+
+    // todo remove shutdown call once program operates as expected.
+    system.shutdown()
 
   }
 }
