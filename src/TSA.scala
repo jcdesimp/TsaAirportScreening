@@ -12,14 +12,13 @@ object TSA {
 
     val NUM_LINES = 3 // N Number of lines in the airport
 
+    // Build up the TSA system
+
     val system = ActorSystem("TSAsystem")
 
     val tsaJail = system.actorOf(Props(classOf[JailActor], NUM_LINES))
 
     val tsaLines = mutable.ArrayBuffer.empty[TSALine]
-    //val docChecker = system.actorOf(Props(classOf[DocCheckActor]))
-    //docChecker ! new WaitingMessage
-
 
 
     for (x <- 0 until NUM_LINES) {
@@ -33,10 +32,25 @@ object TSA {
     val docCheck = system.actorOf(Props(classOf[DocCheckActor], tsaLines))
 
 
-    //setup complete, start throwing passengers at it
 
-    docCheck.tell(new PowerOn, ActorRef.noSender)
 
+    // System power on
+    docCheck ! new PowerOn
+
+    // Setup complete, start sending passengers at it
+    docCheck ! new Passenger("Bob")
+    docCheck ! new Passenger("Bill")
+    docCheck ! new Passenger("Joe")
+    docCheck ! new Passenger("John")
+    docCheck ! new Passenger("Mike")
+    docCheck ! new Passenger("Ted")
+    docCheck ! new Passenger("Pete")
+    docCheck ! new Passenger("Rob")
+    docCheck ! new Passenger("Jake")
+    docCheck ! new Passenger("Steve")
+
+    // All passengers have finished arriving, start system shutdown
+    docCheck ! new PowerOff
 
 
 
