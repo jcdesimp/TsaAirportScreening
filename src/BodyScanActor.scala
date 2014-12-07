@@ -5,10 +5,8 @@ import akka.actor.{ActorRef, Actor, UntypedActor}
  * Created by jcdesimp on 12/3/14.
  * Actor representing BodyScanner
  */
-class BodyScanActor(idnum: Int, sec: ActorRef) extends Actor {
+class BodyScanActor(val id: Int, val security: ActorRef) extends Actor {
 
-  val id = idnum
-  val security = sec
 
   override def receive: Receive = {
 

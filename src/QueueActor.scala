@@ -3,13 +3,10 @@ import akka.actor.{ActorRef, Actor, UntypedActor}
 
 /**
  * Created by jcdesimp on 12/2/14.
+ * Represents a passenger waiting queue in a TSA Line
  */
 
-class QueueActor(idnum: Int, bag: ActorRef, bod: ActorRef) extends Actor {
-
-  val id = idnum
-  val bagScan = bag
-  val bodyScan = bod
+class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) extends Actor {
 
   override def receive: Receive = {
 

@@ -3,11 +3,10 @@ import akka.actor.{ActorRef, Actor, UntypedActor}
 
 /**
  * Created by jcdesimp on 12/3/14.
+ * Actor for scanning bags in the TSA system
  */
-class BagScanActor(idnum: Int, sec: ActorRef) extends Actor {
+class BagScanActor(val id: Int, val security: ActorRef) extends Actor {
 
-  val id = idnum
-  val security = sec
 
   override def receive: Receive = {
 

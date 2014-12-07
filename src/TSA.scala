@@ -1,4 +1,4 @@
-import akka.actor.{ActorSystem, Props}
+import akka.actor.{ActorRef, ActorSystem, Props}
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
@@ -28,8 +28,19 @@ object TSA {
       val body = system.actorOf(Props(classOf[BodyScanActor], x, sec))
       val que = system.actorOf(Props(classOf[QueueActor], x, bag, body))
       tsaLines += new TSALine(sec, bag, body, que)
-
     }
+
+    val docCheck = system.actorOf(Props(classOf[DocCheckActor], tsaLines))
+
+
+    //setup complete, start throwing passengers at it
+
+    docCheck.tell(new PowerOn, ActorRef.noSender)
+
+
+
+
+
 
     // todo remove shutdown call once program operates as expected.
     system.shutdown()
