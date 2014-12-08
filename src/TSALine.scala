@@ -6,7 +6,4 @@ import akka.actor.ActorRef
  * Contains a security
  */
 class TSALine(val id: Int, val security: ActorRef, val bagScan: ActorRef, val bodyScan: ActorRef, val queue: ActorRef) {
-
-
-
 }

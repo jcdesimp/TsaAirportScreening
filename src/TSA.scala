@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
 object TSA {
   def main (args: Array[String]) {
 
-    val NUM_LINES = 3 // N Number of lines in the airport
+    val NUM_LINES = 1 // N Number of lines in the airport
 
     // Build up the TSA system
 
@@ -38,7 +38,7 @@ object TSA {
     docCheck ! new PowerOn
 
     // Setup complete, start sending passengers at it
-    docCheck ! new Passenger("Bob")
+    /*docCheck ! new Passenger("Bob")
     docCheck ! new Passenger("Bill")
     docCheck ! new Passenger("Joe")
     docCheck ! new Passenger("John")
@@ -47,7 +47,11 @@ object TSA {
     docCheck ! new Passenger("Pete")
     docCheck ! new Passenger("Rob")
     docCheck ! new Passenger("Jake")
-    docCheck ! new Passenger("Steve")
+    docCheck ! new Passenger("Steve")*/
+
+    docCheck ! new Passenger("p1")
+    docCheck ! new Passenger("p2")
+    docCheck ! new Passenger("p3")
 
     // All passengers have finished arriving, start system shutdown
     docCheck ! new PowerOff
@@ -57,7 +61,7 @@ object TSA {
 
 
     // todo remove shutdown call once program operates as expected.
-    system.shutdown()
+    //system.shutdown()
 
   }
 }

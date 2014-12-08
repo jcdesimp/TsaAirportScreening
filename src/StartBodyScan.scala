@@ -1,6 +1,6 @@
 /**
  * Created by jcdesimp on 12/4/14.
  */
-class StartBodyScan {
+class StartBodyScan(val passenger: Passenger) {
 
 }

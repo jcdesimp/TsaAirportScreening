@@ -3,9 +3,9 @@ import akka.actor.{Actor, UntypedActor}
 
 /**
  * Created by jcdesimp on 12/3/14.
+ * Jail actor for the TSA system
  */
 class JailActor(numLines: Int) extends Actor {
-  var numSec: Int = numLines
 
 
   override def receive: Receive = {

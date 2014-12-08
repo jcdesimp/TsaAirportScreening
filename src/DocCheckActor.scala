@@ -25,7 +25,13 @@ class DocCheckActor(val lines: mutable.ArrayBuffer[TSALine]) extends Actor {
 
   override def receive: Receive = {
 
-    case m: PowerOn => println("Document Check is powering on.")
+    case m: PowerOn => {
+      println("Document Check is powering on.")
+      for (x <- 0 until lines.length) {
+        // pass on the power on message
+        lines.apply(x).queue ! m
+      }
+    }
 
     case m: Passenger => {
       val rand = new Random()
@@ -36,12 +42,19 @@ class DocCheckActor(val lines: mutable.ArrayBuffer[TSALine]) extends Actor {
       } else {
         val nextLine = getNextLine
         println(m.name + " is sent to queue " + nextLine.id + ".")
+        nextLine.queue ! new WaitingMessage(m)
       }
 
 
     }
 
-    case m: PowerOff => println("Document Check is powering down.")
+    case m: PowerOff => {
+      println("Document Check is powering off.")
+      for (x <- 0 until lines.length) {
+        // pass on the power off message
+        lines.apply(x).queue ! m
+      }
+    }
 
     case _ => unhandled(receive)
 
