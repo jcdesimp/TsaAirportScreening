@@ -26,7 +26,7 @@ object TSA {
       val bag = system.actorOf(Props(classOf[BagScanActor], x, sec))
       val body = system.actorOf(Props(classOf[BodyScanActor], x, sec))
       val que = system.actorOf(Props(classOf[QueueActor], x, bag, body))
-      tsaLines += new TSALine(sec, bag, body, que)
+      tsaLines += new TSALine(x, sec, bag, body, que)
     }
 
     val docCheck = system.actorOf(Props(classOf[DocCheckActor], tsaLines))

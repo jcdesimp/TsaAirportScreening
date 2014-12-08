@@ -5,7 +5,7 @@ import akka.actor.ActorRef
  * Container class representing a line in the TSA system
  * Contains a security
  */
-class TSALine(val security: ActorRef, val bagScan: ActorRef, val bodyScan: ActorRef, val queue: ActorRef) {
+class TSALine(val id: Int, val security: ActorRef, val bagScan: ActorRef, val bodyScan: ActorRef, val queue: ActorRef) {
 
 
 

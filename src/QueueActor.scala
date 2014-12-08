@@ -13,4 +13,6 @@ class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) ext
     case _ => unhandled(receive)
 
   }
+
+
 }
