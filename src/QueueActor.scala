@@ -19,20 +19,16 @@ class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) ext
 
   override def receive: Receive = {
 
-    case m: PowerOn => {
+    case m: PowerOn =>
       println("Queue "+id+" is powered on.")
-    }
 
-    case m: PowerOff => {
+    case m: PowerOff =>
       readyToShutdown = true
       if (waiting.isEmpty) {
         shutdown()
       }
 
-
-    }
-
-    case m: BodyReady => {
+    case m: BodyReady =>
       if (waiting.isEmpty) {
         bodyScannerReady = true
       } else {
@@ -45,9 +41,8 @@ class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) ext
       if (waiting.isEmpty && readyToShutdown && bodyScannerReady) {
         shutdown()
       }
-    }
 
-    case m: WaitingMessage => {
+    case m: WaitingMessage =>
 
       println("Passenger " + m.passenger.name + " enters queue " + id)
       waiting.enqueue(m.passenger)
@@ -63,8 +58,6 @@ class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) ext
       /*if (waiting.isEmpty && readyToShutdown) {
         shutdown()
       }*/
-
-    }
 
     case _ => unhandled(receive)
 
