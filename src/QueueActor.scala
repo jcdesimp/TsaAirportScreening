@@ -34,8 +34,7 @@ class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) ext
       } else {
         bodyScannerReady = false
         val next = waiting.dequeue()
-        println(next.name + " is sent to body scanner " + id + ".")
-        bodyScan ! new StartBodyScan(next)
+        send_passenger(next)
 
       }
       if (waiting.isEmpty && readyToShutdown && bodyScannerReady) {
@@ -50,8 +49,7 @@ class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) ext
       if (bodyScannerReady) {
         bodyScannerReady = false
         val next = waiting.dequeue()
-        println(next.name + " is sent to body scanner " + id + ".")
-        bodyScan ! new StartBodyScan(next)
+        send_passenger(next)
 
       }
 
@@ -67,6 +65,11 @@ class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) ext
     println("Queue "+id+" is powering off.")
     bodyScan ! new PowerOff
     bagScan ! new PowerOff
+  }
+
+  def send_passenger(p: Passenger) = {
+    println(p.name + " is sent to body scanner " + id + ".")
+    bodyScan ! new StartBodyScan(p)
   }
 
 
