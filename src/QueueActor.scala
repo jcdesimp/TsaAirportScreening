@@ -13,6 +13,8 @@ class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) ext
   private var bodyScannerReady = true
   private var readyToShutdown = false
 
+  private var shutdownSent = false
+
   private val waiting =  new mutable.Queue[Passenger]()
 
 
@@ -62,9 +64,12 @@ class QueueActor(val id: Int, val bagScan: ActorRef, val bodyScan: ActorRef) ext
   }
 
   def shutdown() = {
-    println("Queue "+id+" is powering off.")
-    bodyScan ! new PowerOff
-    bagScan ! new PowerOff
+    if (!shutdownSent) {
+      shutdownSent = true
+      println("Queue " + id + " is powering off.")
+      bodyScan ! new PowerOff
+      bagScan ! new PowerOff
+    }
   }
 
   def send_passenger(p: Passenger) = {

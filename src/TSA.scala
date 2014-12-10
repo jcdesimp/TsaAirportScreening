@@ -10,7 +10,7 @@ import scala.collection.mutable.ArrayBuffer
 object TSA {
   def main (args: Array[String]) {
 
-    val NUM_LINES = 1 // N Number of lines in the airport
+    val NUM_LINES = 3 // N Number of lines in the airport
 
     // Build up the TSA system
 

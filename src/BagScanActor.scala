@@ -26,12 +26,12 @@ class BagScanActor(val id: Int, val security: ActorRef) extends Actor {
       println("Bag scanner " + id + " receives passenger " + p.name + "\'s" + " baggage.")
 
       if(rand.nextInt(100) < 20) {
-        println(p.name + "\'s baggage not pass bag scan!")
-        println(p.name + " is sent to security " + id + ".")
+        println(p.name + "\'s baggage does not pass bag scan!")
+        println(p.name + "\'s baggage leaves bag scanner " + id + ".")
         security ! new BagStatus(p, false)
       } else {
-        println(p.name + "\'s passes bag scan.")
-        println(p.name + " is sent to security " + id + ".")
+        println(p.name + "\'s baggage passes bag scan.")
+        println(p.name + "\'s baggage leaves bag scanner " + id + ".")
         security ! new BagStatus(p, true)
       }
 

@@ -29,7 +29,8 @@ class DocCheckActor(val lines: mutable.ArrayBuffer[TSALine]) extends Actor {
       println("Document Check is powering on.")
       for (x <- 0 until lines.length) {
         // pass on the power on message
-        lines.apply(x).queue ! m
+
+        lines.apply(x).queue ! new PowerOn
       }
     }
 
@@ -52,6 +53,7 @@ class DocCheckActor(val lines: mutable.ArrayBuffer[TSALine]) extends Actor {
       println("Document Check is powering off.")
       for (x <- 0 until lines.length) {
         // pass on the power off message
+        println("Sending power off to "+x)
         lines.apply(x).queue ! m
       }
     }

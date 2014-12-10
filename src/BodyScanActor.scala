@@ -29,7 +29,7 @@ class BodyScanActor(val id: Int, val security: ActorRef) extends Actor {
 
     case m: PowerOff =>
       readyToShutdown = true
-      println("Body scanner " + id + " is powering off.")
+      shutdown()
 
     case _ => unhandled(receive)
 
@@ -48,11 +48,11 @@ class BodyScanActor(val id: Int, val security: ActorRef) extends Actor {
     println(p.name + " exits body scanner " + id + ".")
 
     if(rand.nextInt(100) < 20) {
-      println(p.name + "\'s does not pass body scan!")
+      println(p.name + " does not pass body scan!")
       println(p.name + " is sent to security " + id + ".")
       security ! new BodyStatus(p, false)
     } else {
-      println(p.name + "\'s passes body scan.")
+      println(p.name + " passes body scan.")
       println(p.name + " is sent to security " + id + ".")
       security ! new BodyStatus(p, true)
     }
